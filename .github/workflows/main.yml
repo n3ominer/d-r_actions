@@ -5,4 +5,11 @@ jobs: # Les regroupements d'étapes à appliquer lors du WF
     runs-on: ubuntu-latest # L'environnement sur lequel lancer le WF
     steps: # Liste des étapes du job
       - run: echo "Hello, World!" # 1 étape du job
+  build: # Build the apk
+    runs-on: ubuntu-latest
+    steps:
+      - run: ls
+      #      {organisation}/{repertoire}@{version}
+      - uses: actions/checkout@v4.2.2
+      - run: ls
     
