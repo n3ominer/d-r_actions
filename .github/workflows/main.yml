@@ -12,10 +12,17 @@ jobs: # Les regroupements d'étapes à appliquer lors du WF
       - uses: actions/checkout@v4.2.2
       - run: ls
       - run: echo "Ce workflow a été trigger sur un événement de type ${{ github.event_name }}"
-  android-app-build:
+  app-android-build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
       - name: Build with Gradle
-      # You may pin to the exact commit or the version.
-      # uses: gradle/actions@06832c7b30a0129d7fb559bcc6e43d26f6374244
-      - uses: gradle/actions@v4.3.1
+        run: ./gradlew build
