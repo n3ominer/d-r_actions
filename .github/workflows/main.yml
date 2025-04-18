@@ -5,11 +5,24 @@ jobs: # Les regroupements d'étapes à appliquer lors du WF
     runs-on: ubuntu-latest # L'environnement sur lequel lancer le WF
     steps: # Liste des étapes du job
       - run: echo "Hello, World!" # 1 étape du job
-  build: # Build the apk
+  ekoz: # Build the apk
     runs-on: ubuntu-latest
     steps:
-      - run: ls
       #      {organisation}/{repertoire}@{version}
       - uses: actions/checkout@v4.2.2
       - run: ls
-    
+      - run: echo "Ce workflow a été trigger sur un événement de type ${{ github.event_name }}"
+  app-android-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Build with Gradle
+        run: ./gradlew build
